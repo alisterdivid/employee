@@ -1,0 +1,90 @@
+Wordpress get category of post:
+=========================
+$post_categories = wp_get_post_categories( $post_id );
+$cats = array();
+     
+foreach($post_categories as $c){
+    $cat = get_category( $c );
+    $cats[] = array( 'name' => $cat->name, 'slug' => $cat->slug );
+}
+=================================================================================
+Wordpress get_category:
+
+    <?php
+    $categories = get_categories(array(
+        'orderby' => 'name',
+        'order' => 'ASC'
+    ));
+
+    foreach ($categories as $category) {
+        $category_link = sprintf(
+            '<a href="%1$s" alt="%2$s">%3$s</a>',
+            esc_url(get_category_link($category->term_id)),
+            esc_attr(sprintf(__('View all posts in %s', 'textdomain'), $category->name)),
+            esc_html($category->name)
+        );
+        echo $categories->name;
+        echo $category->term_id;
+        echo $category_link;
+        echo $category->description;
+        echo $category->count;
+
+        echo '<p>' . sprintf(esc_html__('Category: %s', 'textdomain'),  $category->name) . '</p> ';
+        echo '<p>' . sprintf(esc_html__('Description: %s', 'textdomain'), $category->description) . '</p>';
+        echo '<p>' . sprintf(esc_html__('Post Count: %s', 'textdomain'), $category->count) . '</p>';
+    }
+    ?>
+	
+	==============================================
+	<?php echo get_category_parents( $cat, true, ' &raquo; ' ); ?>
+	   echo get_the_category_list(',', 'Make', $post->ID );
+	   
+==================================================================================
+                        <?php
+                                global $post;
+                                $args = array(
+                                    'post_type' => 'post',
+                                    'orderby' => 'title',
+                                    'order' => 'ASC',
+                                    'posts_per_page' => -1,
+                                    'tax_query' => array(
+                                        'relation' => 'AND',
+                                        array(
+                                            'taxonomy' => 'category',
+                                            'field' => 'slug',
+                                            'terms' => array('make'),
+                                        ),
+                                        array(
+                                            'taxonomy' => 'category',
+                                            'field' => 'slug',
+                                            'terms' => array('brand'),
+                                        ),
+                                    ),
+                                );
+                                $postslist = get_posts($args);
+                                foreach ($postslist as $post) :
+                                    setup_postdata($post); ?>
+                                    <div>
+                                        <option>
+                                            <?php the_title(); ?>
+                                        </option>
+                                    </div>
+                                    <?php
+                                endforeach;
+                                wp_reset_postdata();
+                                ?>
+==============================================================
+        $category = get_term_by('slug', 'make', 'category');
+get_cat_ID( 'Make' )		
+$parent = get_term( $cat->parent, 'category' );
+
+alert(JSON.stringify(ajaxData));
+$("select#bulb_year option[value="+selectedYear+"]").attr('selected', 'selected');
+
+==========================================
+$categories = get_terms(array('taxonomy' =>'category',
+    'orderby'=> 'name',
+    'hide_empty' => false,
+    'parent' => get_cat_ID('brand'),
+));
+$selected_brand = get_term_by('slug', $brand, 'category' );
